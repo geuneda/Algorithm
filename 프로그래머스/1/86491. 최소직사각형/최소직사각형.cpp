@@ -1,30 +1,26 @@
-#include <string>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
 int solution(vector<vector<int>> sizes) {
-    int answer = 0;
-
-    int width = 0, height = 0;
-    for (int i = 0; i < sizes.size(); i++)
-    {
-        if (sizes[i][0] < sizes[i][1])
-        {
-            int temp = sizes[i][0];
-            sizes[i][0] = sizes[i][1];
-            sizes[i][1] = temp;
-        }
-        if (width < sizes[i][0])
-        {
-            width = sizes[i][0];
-        }
-        if (height < sizes[i][1])
-        {
-            height = sizes[i][1];
-        }
-    }
-    answer = width * height;
     
-    return answer;
+    int w = 0;
+    int h = 0;
+    
+    for(int i = 0; i < sizes.size(); i++)
+    {
+        if (sizes[i][1] > sizes[i][0])
+        {
+            int temp = sizes[i][1];
+            sizes[i][1] = sizes[i][0];
+            sizes[i][0] = temp;
+        }
+
+        w = std::max(w, sizes[i][0]);
+
+        h = std::max(h, sizes[i][1]);
+    }
+    
+    return w * h;
 }
